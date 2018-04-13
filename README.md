@@ -1,4 +1,4 @@
-<img src="IntroPython/Images/PoweredTechGirlz.png" align="right" width="50%">
+<img src="IntroPython/Images/PoweredTechGirlz.png" align="right" width="350px">
 
 # Python Notebooks for [ORCSGirls](http://www.orcsgirls.org)
 
