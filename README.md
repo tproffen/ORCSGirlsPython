@@ -8,7 +8,7 @@ Current classes are
 
 * `IntroPython` - Activities for *Python using Jupyter notebooks*.
 * `MachineLearning` - Fruit classifier notebook as part of *Learning about Machine Learning*.
-* more coming soon.
+* `TextMining` - Activities for *Text Mining*.
 
 Contact: [thomas@orcsgirls.org](mailto:thomas@orcsgirls.org)
 
