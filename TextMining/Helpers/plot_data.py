@@ -1,5 +1,6 @@
 
-    # %matplotlib inline
+# %matplotlib inline
+
 import matplotlib.pyplot as plt
 import matplotlib
 plt.style.use('seaborn-white')
