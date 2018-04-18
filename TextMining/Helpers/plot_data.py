@@ -1,6 +1,5 @@
 
-# %matplotlib inline
-
+    # %matplotlib inline
 import matplotlib.pyplot as plt
 import matplotlib
 plt.style.use('seaborn-white')
@@ -23,4 +22,23 @@ def plot(data):
     plt.gca().yaxis.grid(True)
 
     # and this displays the plot!
+    plt.show()
+
+
+def plot_words(data):
+
+    words = []
+    counts = []
+    for d in data:
+        words.append(d[0])
+        counts.append(d[1])
+
+    plt.figure(figsize=(12, 8))
+
+    counts_len = len(counts)
+    positions = range(counts_len)
+    plt.bar(positions, counts)
+
+    plt.xticks(positions, words, rotation=45)
+
     plt.show()
