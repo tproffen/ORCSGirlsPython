@@ -1,8 +1,8 @@
 
-    # %matplotlib inline
+#%matplotlib inline
 import matplotlib.pyplot as plt
 import matplotlib
-plt.style.use('seaborn-white')
+plt.style.use('bmh')
 matplotlib.rcParams.update({'font.size': 14})
 
 

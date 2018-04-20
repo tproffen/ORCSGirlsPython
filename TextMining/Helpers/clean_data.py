@@ -7,6 +7,15 @@ def remove_special_characters(word):
     return ''.join(good_characters)
 
 
+def make_clean_words(book):
+    clean_words = []
+    for word in book.split():
+        lowercase_word = word.lower()
+        clean_word = remove_special_characters(lowercase_word)
+        clean_words.append(clean_word)
+    return clean_words
+
+
 def remove_stopwords(words):
     with open('Data/stopwords.txt') as stopwords_file:
         stopwords = stopwords_file.read().split()
