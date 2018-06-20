@@ -73,3 +73,7 @@ __pycache__
 .#*
 .coverage
 *.swp
+
+# CIFAR dataset directory
+MachineLearning/Data/cifar-10-batches-py
+
