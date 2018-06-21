@@ -1,4 +1,4 @@
-<img src="IntroPython/Images/PoweredTechGirlz.png" align="right" width="250px">
+<a href="www.techgirlz.org"><img src="IntroPython/Images/PoweredTechGirlz.png" align="right" width="250px"></a>
 
 # Python Notebooks for TechShopz
 
