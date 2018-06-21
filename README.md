@@ -7,7 +7,7 @@ Welcome to out collection of iPython notebooks developed by [ORCSGirls](http://w
 Current classes are
 
 * `IntroPython` - Activities for *Python using Jupyter notebooks*.
-* `MachineLearning` - Fruit classifier notebook as part of *Learning about Machine Learning*.
+* `MachineLearning` - Activities for *Artificial Intelligence: How Computers Learn*.
 * `TextMining` - Activities for *Text Mining*.
 
 Contact: [thomas@orcsgirls.org](mailto:thomas@orcsgirls.org)
