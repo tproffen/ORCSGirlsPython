@@ -7,6 +7,7 @@ Welcome to out collection of iPython notebooks developed by [ORCSGirls](http://w
 Current classes are
 
 * `IntroPython` - Activities for *Python using Jupyter notebooks*.
+* `Algorithms` - Activities for *Fun with Algorithms*.
 * `MachineLearning` - Activities for *Artificial Intelligence: How Computers Learn*.
 * `TextMining` - Activities for *Text Mining*.
 
