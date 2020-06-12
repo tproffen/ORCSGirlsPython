@@ -5,9 +5,9 @@
 
 # Install needed Python Packages
 
-!pip install nltk
-!pip install vaderSentiment
-#!python -m nltk.downloader all
+pip install nltk
+pip install vaderSentiment
+#python -m nltk.downloader all
 
 # Copy all needed files
 
