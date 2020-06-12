@@ -25,4 +25,5 @@ curl -s -o Data/05_order_of_the_phoenix.txt https://raw.githubusercontent.com/tp
 curl -s -o Data/06_half_blood_prince.txt https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/TextMining/Data/06_half_blood_prince.txt
 curl -s -o Data/07_deathly_hallows.txt https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/TextMining/Data/07_deathly_hallows.txt
 curl -s -o Data/stopwords.txt https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/TextMining/Data/stopwords.txt
+curl -s -o Data/chapters.json https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/TextMining/Data/chapters.json
 echo "Done"
