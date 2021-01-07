@@ -8,6 +8,7 @@ Current classes are
 
 * `IntroPython` - Activities for *Python using Jupyter notebooks*.
 * `Algorithms` - Activities for *Fun with Algorithms*.
+* `ArtisticMath` - Activities for *Artistic math*.
 * `MachineLearning` - Activities for *Artificial Intelligence: How Computers Learn*.
 * `TextMining` - Activities for *Text Mining*.
 
