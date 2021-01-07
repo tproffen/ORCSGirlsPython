@@ -1,5 +1,3 @@
-!pip install ColabTurtle
-
 from ColabTurtle.Turtle import *
 import math
 
