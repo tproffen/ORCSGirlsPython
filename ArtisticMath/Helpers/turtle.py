@@ -141,11 +141,11 @@ def _generateSvgDrawing():
 
 # helper functions for updating the screen using the latest positions/angles/lines etc.
 def _updateDrawing():
-    if(not is_live_drawing) return
-    if drawing_window == None:
-        raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
-    time.sleep(timeout)
-    drawing_window.update(HTML(_generateSvgDrawing()+SAVEJS))
+    if(is_live_drawing)
+        if drawing_window == None:
+            raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
+        time.sleep(timeout)
+        drawing_window.update(HTML(_generateSvgDrawing()+SAVEJS))
 
 
 # helper function for managing any kind of move to a given 'new_pos' and draw lines if pen is down
