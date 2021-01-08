@@ -1,4 +1,4 @@
-from ColabTurtle.Turtle import *
+from turtle import *
 import math
 
 #------------------------------------------------------------------------
