@@ -2,16 +2,21 @@ from IPython.display import display, HTML
 import time
 import math
 
-# Created at: 23rd October 2018
-#         by: Tolga Atam
-
+#-------------------------------------------------------------------------------------------------------
+# Created 23rd October 2018 by Tolga Atam
+# https://github.com/tolgaatam/ColabTurtle
+#
 # Module for drawing classic Turtle figures on Google Colab notebooks.
 # It uses html capabilites of IPython library to draw svg shapes inline.
 # Looks of the figures are inspired from Blockly Games / Turtle (blockly-games.appspot.com/turtle)
+#
+# Extensions by Thomas Proffen, 2021
+#-------------------------------------------------------------------------------------------------------
 
 DEFAULT_WINDOW_SIZE = (800, 500)
 DEFAULT_SPEED = 4
 DEFAULT_TURTLE_VISIBILITY = True
+DEFAULT_LIVE_DRAWING = True
 DEFAULT_PEN_COLOR = 'white'
 DEFAULT_TURTLE_DEGREE = 270
 DEFAULT_BACKGROUND_COLOR = 'black'
@@ -67,6 +72,7 @@ def _speedToSec(speed):
 timeout = _speedToSec(DEFAULT_SPEED)
 
 is_turtle_visible = DEFAULT_TURTLE_VISIBILITY
+is_live_drawing = DEFAULT_LIVE_DRAWING
 pen_color = DEFAULT_PEN_COLOR
 window_size = DEFAULT_WINDOW_SIZE
 turtle_pos = (DEFAULT_WINDOW_SIZE[0] // 2, DEFAULT_WINDOW_SIZE[1] // 2)
@@ -135,6 +141,7 @@ def _generateSvgDrawing():
 
 # helper functions for updating the screen using the latest positions/angles/lines etc.
 def _updateDrawing():
+    if(!is_live_drawing) return
     if drawing_window == None:
         raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
     time.sleep(timeout)
@@ -279,13 +286,29 @@ def showturtle():
     _updateDrawing()
 
 
-# switch turtle visibility to ON
+# switch turtle visibility to OFF
 def hideturtle():
     global is_turtle_visible
 
     is_turtle_visible = False
     _updateDrawing()
 
+# switch live drawing to ON
+def liveon():
+    global is_live_drawing
+
+    is_live_drawing = True
+
+
+# switch live drawing to OFF
+def liveoff():
+    global is_live_drawing
+
+    is_live_drawing = FALSE
+
+# show drawing
+def show():
+    _updateDrawing()
 
 # change the background color of the drawing area; valid colors are defined at VALID_COLORS
 def bgcolor(color):
