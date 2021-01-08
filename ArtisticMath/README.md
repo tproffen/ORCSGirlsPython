@@ -8,21 +8,21 @@ The activities use a modified version of [ColabTurtle](https://github.com/tolgaa
 * **`right(degrees)`**  Turns the direction of the turtle (pen) to the right by `degrees`.
 * **`face(degrees)`** Sets the direction or heading  of the turtle (pen) to `degrees`.
 * **`left(degrees)`** Turns the direction of the turtle (pen) to the left by `degrees`.
-`penup()`
-`pendown()`
-`speed(speed)`
-`setx(x)`
-`sety(y)`
-`getx()`
-`gety()`
-`goto(x, y)`
-`showturtle()`
-`hideturtle()`
-`liveon()`
-`liveoff()`
-`show()`
-`bgcolor(color)`
-`color(color)`
-`width(width)`
+* **`penup()`** Pen up. No lines will be drawn.
+* **`pendown()`** Pen down. Lines between points will be drawn.
+* **`speed(speed)`** Set drawing speed to `speed` (1:slowest, 13: fastest).
+* **`setx(x)`** Set turtle x position to `x`.
+* **`sety(y)`** Set turtle y position to `y`.
+* **`getx()`** Get the current x position of the turtle.
+* **`gety()`** Get the current y position of the turtle.
+* **`goto(x, y)`** Set turtle position to `x,y`.
+* **`showturtle()`** Show the turtle symbol on drawing.
+* **`hideturtle()`** Hide the turtle symbol on drawing.
+* **`liveon()`** Show drawing step by step.
+* **`liveoff()`** Do not show drawing until `show()` command.
+* **`show()`** Show current drawing.
+* **`bgcolor(color)`** Set background color to `color` (CSS color names and #xxxxxx format allowed).
+* **`color(color)`** Set line color to `color` (CSS color names and #xxxxxx format allowed).
+* **`width(width)`** Set line width.
 
 Contact: [thomas@orcsgirls.org](mailto:thomas@orcsgirls.org)
