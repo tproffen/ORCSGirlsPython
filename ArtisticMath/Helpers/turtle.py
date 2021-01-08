@@ -320,8 +320,8 @@ def show():
 def bgcolor(color):
     global background_color
 
-    if not color in VALID_COLORS:
-        raise ValueError('color value should be one of the following: ' + str(VALID_COLORS))
+#    if not color in VALID_COLORS:
+#        raise ValueError('color value should be one of the following: ' + str(VALID_COLORS))
     background_color = color
     _updateDrawing()
 
