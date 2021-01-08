@@ -141,7 +141,7 @@ def _generateSvgDrawing():
 
 # helper functions for updating the screen using the latest positions/angles/lines etc.
 def _updateDrawing():
-    if(!is_live_drawing) return
+    if(not is_live_drawing) return
     if drawing_window == None:
         raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
     time.sleep(timeout)
