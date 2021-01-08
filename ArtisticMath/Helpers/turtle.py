@@ -296,3 +296,7 @@ def width(width):
     pen_width = width
     # TODO: decide if we should put the timout after changing the speed
     # _updateDrawing()
+
+# Some added functions by TEP
+def save():
+    print(_generateSvgDrawing())
