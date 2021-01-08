@@ -298,5 +298,26 @@ def width(width):
     # _updateDrawing()
 
 # Some added functions by TEP
+js = """<script>
+  var svg = document.querySelector( "svg" );
+  var svgData = new XMLSerializer().serializeToString( svg ); 
+  var canvas = document.createElement( "canvas" );
+  var ctx = canvas.getContext( "2d" );
+  var img = document.createElement( "img" );
+  img.setAttribute( "src", "data:image/svg+xml;base64," + btoa( svgData ) );
+
+  img.onload = function() {
+    ctx.canvas.width=800;
+    ctx.canvas.height=500;
+    ctx.drawImage( img, 0, 0 );
+    
+    var a = document.createElement("a");
+    a.download = "turtle.png";
+    a.href = canvas.toDataURL("image/png");
+    a.click();};
+</script>
+"""
+
 def save():
-    print(_generateSvgDrawing())
+    drawing_window.update(HTML(_generateSvgDrawing()+js))
+    print("Saved file to turtle.png")
