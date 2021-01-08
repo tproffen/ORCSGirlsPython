@@ -14,7 +14,7 @@ import math
 #-------------------------------------------------------------------------------------------------------
 
 DEFAULT_WINDOW_SIZE = (800, 500)
-DEFAULT_SPEED = 4
+DEFAULT_SPEED = 10
 DEFAULT_TURTLE_VISIBILITY = True
 DEFAULT_LIVE_DRAWING = True
 DEFAULT_PEN_COLOR = 'white'
@@ -141,7 +141,7 @@ def _generateSvgDrawing():
 
 # helper functions for updating the screen using the latest positions/angles/lines etc.
 def _updateDrawing():
-    if(is_live_drawing)
+    if(is_live_drawing):
         if drawing_window == None:
             raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
         time.sleep(timeout)
@@ -304,11 +304,17 @@ def liveon():
 def liveoff():
     global is_live_drawing
 
-    is_live_drawing = FALSE
+    is_live_drawing = False
 
 # show drawing
 def show():
+    global is_live_drawing
+
+    tmp = is_live_drawing
+    is_live_drawing = True
     _updateDrawing()
+    is_live_drawing = tmp
+
 
 # change the background color of the drawing area; valid colors are defined at VALID_COLORS
 def bgcolor(color):
