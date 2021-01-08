@@ -18,7 +18,7 @@ DEFAULT_BACKGROUND_COLOR = 'black'
 DEFAULT_IS_PEN_DOWN = True
 DEFAULT_SVG_LINES_STRING = ""
 DEFAULT_PEN_WIDTH = 4
-VALID_COLORS = ('white', 'yellow', 'orange', 'red', 'green', 'blue', 'purple', 'grey', 'black')
+VALID_COLORS = ('white', 'yellow', 'orange', 'red', 'green', 'blue', 'purple', 'grey', 'black', 'lightgrey')
 SVG_TEMPLATE = """
       <svg width="{window_width}" height="{window_height}">
         <rect width="100%" height="100%" fill="{background_color}"/>
