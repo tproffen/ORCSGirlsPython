@@ -6,7 +6,6 @@ import math
 #------------------------------------------------------------------------
 def roseCurve(x_start, y_start, sizefactor, petalsCount):
 
-  speed(10)
   penup()
   x = x_start
   y = y_start
@@ -34,7 +33,6 @@ def roseCurve(x_start, y_start, sizefactor, petalsCount):
 #------------------------------------------------------------------------
 def parabola(x_start, y_start, sizefactor):
 
-  speed(10)
   penup()
   x = x_start
   y = y_start
@@ -56,7 +54,6 @@ def parabola(x_start, y_start, sizefactor):
 #------------------------------------------------------------------------
 def spiral(x_start, y_start, sizefactor, spiralLength):
 
-  speed(10)
   penup()
   x = x_start
   y = y_start
@@ -78,7 +75,6 @@ def spiral(x_start, y_start, sizefactor, spiralLength):
 #------------------------------------------------------------------------
 def circle(x_start, y_start, sizefactor):
 
-  speed(10)
   penup()
   tdivv = 0
   x = x_start
@@ -98,7 +94,6 @@ def circle(x_start, y_start, sizefactor):
 #------------------------------------------------------------------------
 def polygon(x_start, y_start, sizefactor, numSides):
 
-  speed(10)
   penup()
   x = x_start
   y = y_start
@@ -116,7 +111,6 @@ def polygon(x_start, y_start, sizefactor, numSides):
 #------------------------------------------------------------------------
 def bowtie(x_start, y_start, sizefactor):
  
-  speed(10)
   penup()
   tdivv = 0
   x = x_start
