@@ -35,6 +35,29 @@ TURTLE_SVG_TEMPLATE = """
 
 SPEED_TO_SEC_MAP = {1: 1.5, 2: 0.9, 3: 0.7, 4: 0.5, 5: 0.3, 6: 0.18, 7: 0.12, 8: 0.06, 9: 0.04, 10: 0.02, 11: 0.01, 12: 0.001, 13: 0.0001}
 
+SAVEJS = """<script>
+function saveSVG() {
+  var svg = document.querySelector( "svg" );
+  var svgData = new XMLSerializer().serializeToString( svg ); 
+  var canvas = document.createElement( "canvas" );
+  var ctx = canvas.getContext( "2d" );
+  var img = document.createElement( "img" );
+  img.setAttribute( "src", "data:image/svg+xml;base64," + btoa( svgData ) );
+
+  img.onload = function() {
+    ctx.canvas.width=800;
+    ctx.canvas.height=500;
+    ctx.drawImage( img, 0, 0 );
+    
+    var a = document.createElement("a");
+    a.download = "turtle.png";
+    a.href = canvas.toDataURL("image/png");
+    a.click();};
+}
+</script>
+<div><button onclick="saveSVG()">Save image as PNG</button>
+"""
+
 
 # helper function that maps [1,13] speed values to ms delays
 def _speedToSec(speed):
@@ -115,7 +138,7 @@ def _updateDrawing():
     if drawing_window == None:
         raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
     time.sleep(timeout)
-    drawing_window.update(HTML(_generateSvgDrawing()))
+    drawing_window.update(HTML(_generateSvgDrawing()+SAVEJS))
 
 
 # helper function for managing any kind of move to a given 'new_pos' and draw lines if pen is down
@@ -296,28 +319,3 @@ def width(width):
     pen_width = width
     # TODO: decide if we should put the timout after changing the speed
     # _updateDrawing()
-
-# Some added functions by TEP
-js = """<script>
-  var svg = document.querySelector( "svg" );
-  var svgData = new XMLSerializer().serializeToString( svg ); 
-  var canvas = document.createElement( "canvas" );
-  var ctx = canvas.getContext( "2d" );
-  var img = document.createElement( "img" );
-  img.setAttribute( "src", "data:image/svg+xml;base64," + btoa( svgData ) );
-
-  img.onload = function() {
-    ctx.canvas.width=800;
-    ctx.canvas.height=500;
-    ctx.drawImage( img, 0, 0 );
-    
-    var a = document.createElement("a");
-    a.download = "turtle.png";
-    a.href = canvas.toDataURL("image/png");
-    a.click();};
-</script>
-"""
-
-def save():
-    drawing_window.update(HTML(_generateSvgDrawing()+js))
-    print("Saved file to turtle.png")
