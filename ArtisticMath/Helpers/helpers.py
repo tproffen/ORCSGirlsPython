@@ -108,6 +108,8 @@ def circle(x_start, y_start, sizefactor):
     x *= sizefactor
     y = math.sin(tdiv)
     y *= sizefactor
+    x = round(x)
+    y = round(Y)
     goto(x+x_start, y+y_start)
     pendown()
 
