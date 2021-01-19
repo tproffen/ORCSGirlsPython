@@ -240,6 +240,7 @@ def speed(speed):
 
 # move the turtle to a designated 'x' x-coordinate, y-coordinate stays the same
 def setx(x):
+    x = round(x)
     if not isinstance(x, int):
         raise ValueError('new x position should be an integer')
     if not x >= 0:
@@ -249,6 +250,7 @@ def setx(x):
 
 # move the turtle to a designated 'y' y-coordinate, x-coordinate stays the same
 def sety(y):
+    y = round(y)
     if not isinstance(y, int):
         raise ValueError('new y position should be an integer')
     if not y >= 0:
@@ -267,6 +269,8 @@ def gety():
 
 # move the turtle to a designated 'x'-'y' coordinate
 def goto(x, y):
+    x = round(x)
+    y = round(y)
     if not isinstance(x, int):
         raise ValueError('new x position should be an integer')
     if not x >= 0:
