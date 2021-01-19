@@ -1,4 +1,5 @@
 from Helpers.turtle import *
+from numpy import arange
 import math
 
 #------------------------------------------------------------------------
@@ -20,14 +21,6 @@ def grid(delta):
     pendown()
     goto(xmax,y)
     penup()
- 
-#------------------------------------------------------------------------
-import decimal
-
-def float_range(start, stop, step):
-  while start < stop:
-    yield float(start)
-    start += decimal.Decimal(step)
     
 #------------------------------------------------------------------------
 # Different curve functions
