@@ -77,7 +77,6 @@ def polygon(x_start, y_start, sizefactor, numSides):
   
   fulldegrees = (((numSides-2)*180))
   angle = 180-(fulldegrees/numSides)
-  print('Angle: '+angle)
  
   for t in range(1,numSides+1):
     left(angle)
@@ -87,6 +86,7 @@ def polygon(x_start, y_start, sizefactor, numSides):
 def bowtie(x_start, y_start, sizefactor):
  
   penup()
+  sizefactor=sizefactor*0.01*math.pi
 
   for u in arange(1,14):
     for v in arange(0.0,1.0,0.01):
