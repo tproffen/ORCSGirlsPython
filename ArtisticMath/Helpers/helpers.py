@@ -28,47 +28,21 @@ def grid(delta):
 def roseCurve(x_start, y_start, sizefactor, petalsCount):
 
   penup()
-  x = x_start
-  y = y_start
-  goto(x, y)
-  pendown()
-  penup()
- 
-  for t in range(1000):
-    tdiv = t/100
-    k = petalsCount
-    ktx = k*tdiv
-    kty = k*tdiv
-    x = math.cos(tdiv)
-    x*=math.cos(ktx)
-    x *= sizefactor
-    y=(math.sin(tdiv))
-    y *= math.cos(kty)
-    y *= sizefactor
-    x = round(x)
-    y = round(y)
+
+  for t in arange(0,10,0.05):
+    x = sizefactor * (math.cos(t) * math.cos(t*petalsCount))
+    y = sizefactor * (math.sin(t) * math.cos(t*petalsCount))
     goto(x+x_start, y+y_start)
     pendown()
-
 
 #------------------------------------------------------------------------
 def parabola(x_start, y_start, sizefactor):
 
   penup()
-  x = x_start
-  y = y_start
-  goto(x, y)
-  pendown()
-  penup()
- 
-  for t in range(-100,100):
-    tdiv = t/100
-    x = tdiv
-    x *= sizefactor*3
-    y = tdiv*tdiv
-    y *= sizefactor*3
-    x = round(x)
-    y = round(y)
+  
+  for t in arange(-1,1,0.05):
+    x = sizefactor * t
+    y = sizefactor * t*t
     goto(x+x_start, y+y_start)
     pendown()
     
@@ -76,41 +50,21 @@ def parabola(x_start, y_start, sizefactor):
 def spiral(x_start, y_start, sizefactor, spiralLength):
 
   penup()
-  x = x_start
-  y = y_start
-  goto(x, y)
-  pendown()
-  
- 
-  for t in range(1,spiralLength):
-    tdiv = t/10
-    x = tdiv*math.cos(tdiv)
-    x *= sizefactor
-    y = tdiv*math.sin(tdiv)
-    y *= sizefactor
-    y = round(y)
-    x = round(x)
-    goto(x+x_start, y+y_start)
 
+  for t in arange(1,spiralLength,0.05):
+    x = sizefactor * t * math.cos(t)
+    y = sizefactor * t * math.sin(t)
+    goto(x+x_start, y+y_start)
+    pendown()
 
 #------------------------------------------------------------------------
 def circle(x_start, y_start, sizefactor):
 
   penup()
-  tdivv = 0
-  x = x_start
-  y = y_start
-  goto(x, y)
-  penup()
- 
-  for t in range(1,65):
-    tdiv = t/10
-    x = math.cos(tdiv)
-    x *= sizefactor
-    y = math.sin(tdiv)
-    y *= sizefactor
-    x = round(x)
-    y = round(Y)
+
+  for t in arange(0.0,6.5,0.05):
+    x = sizefactor * math.cos(t)
+    y = sizefactor * math.sin(t)
     goto(x+x_start, y+y_start)
     pendown()
 
@@ -118,14 +72,12 @@ def circle(x_start, y_start, sizefactor):
 def polygon(x_start, y_start, sizefactor, numSides):
 
   penup()
-  x = x_start
-  y = y_start
+  goto(x_start, y_start)
   pendown()
   
   fulldegrees = (((numSides-2)*180))
-  print(fulldegrees)
   angle = 180-(fulldegrees/numSides)
-  print(angle)
+  print('Angle: '+angle)
  
   for t in range(1,numSides+1):
     left(angle)
@@ -135,23 +87,11 @@ def polygon(x_start, y_start, sizefactor, numSides):
 def bowtie(x_start, y_start, sizefactor):
  
   penup()
-  tdivv = 0
-  x = x_start
-  y = y_start
-  goto(x, y)
-  pendown()
- 
-  for t in range(1,14):
-    for tdiv in range(1,100):
-      tdivv = (tdiv/100)+t
-      x = 2 * tdivv
-      x += (2 * math.cos( 14* tdivv))
-      x += (1/tdivv)
-      y = 2 * tdivv
-      y += (2 * math.sin( 15 * tdivv))
-      y += (1/tdivv)
-      x *= sizefactor
-      y *= sizefactor
-      x = round(x)
-      y = round(y)
+
+  for u in arange(1,14):
+    for v in arange(0.0,1.0,0.01):
+      t = u + v
+      x = sizefactor * (2*t + 2*math.cos(14*t) + 1/t)
+      y = sizefactor * (2*t + 2*math.sin(15*t) + 1/t)
       goto(x+x_start, y+y_start)
+      pendown()
