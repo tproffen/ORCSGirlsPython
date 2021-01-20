@@ -145,8 +145,8 @@ def _updateDrawing():
         if drawing_window == None:
             raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
         time.sleep(timeout)
-        SAVEJS.replace("WINDOW_X", window_size[0])
-        SAVEJS.replace("WINDOW_Y", window_size[1])
+        SAVEJS.replace("WINDOW_X", str(window_size[0]))
+        SAVEJS.replace("WINDOW_Y", str(window_size[1]))
         drawing_window.update(HTML(_generateSvgDrawing()+SAVEJS))
 
 
