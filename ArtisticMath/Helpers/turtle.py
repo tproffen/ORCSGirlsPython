@@ -145,9 +145,9 @@ def _updateDrawing():
         if drawing_window == None:
             raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
         time.sleep(timeout)
-        SAVEJS = SAVEJS.replace("WINDOW_X", str(window_size[0]))
-        SAVEJS = SAVEJS.replace("WINDOW_Y", str(window_size[1]))
-        drawing_window.update(HTML(_generateSvgDrawing()+SAVEJS))
+        js = SAVEJS.replace("WINDOW_X", str(window_size[0]))
+        js = js.replace("WINDOW_Y", str(window_size[1]))
+        drawing_window.update(HTML(_generateSvgDrawing()+js))
 
 
 # helper function for managing any kind of move to a given 'new_pos' and draw lines if pen is down
