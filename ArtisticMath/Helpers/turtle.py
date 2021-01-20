@@ -141,6 +141,8 @@ def _generateSvgDrawing():
 
 # helper functions for updating the screen using the latest positions/angles/lines etc.
 def _updateDrawing():
+    global SAVEJS
+    
     if(is_live_drawing):
         if drawing_window == None:
             raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
