@@ -50,8 +50,8 @@ function saveSVG() {
   img.setAttribute( "src", "data:image/svg+xml;base64," + btoa( svgData ) );
 
   img.onload = function() {
-    ctx.canvas.width=800;
-    ctx.canvas.height=500;
+    ctx.canvas.width=WINDOW_X;
+    ctx.canvas.height=WINDOW_Y;
     ctx.drawImage( img, 0, 0 );
     
     var a = document.createElement("a");
@@ -145,6 +145,8 @@ def _updateDrawing():
         if drawing_window == None:
             raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
         time.sleep(timeout)
+        SAVEJS.replace("WINDOW_X", window_size[0])
+        SAVEJS.replace("WINDOW_Y", window_size[1])
         drawing_window.update(HTML(_generateSvgDrawing()+SAVEJS))
 
 
