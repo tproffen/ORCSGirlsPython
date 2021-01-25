@@ -1,4 +1,4 @@
-<a href="http://www.techgirlz.org"><img src="IntroPython/Images/PoweredTechGirlz.png" align="right" width="250px"></a>
+<a href="http://www.techgirlz.org"><img src="Images/PoweredTechGirlz.png" align="right" width="250px"></a>
 
 # Python Notebooks for TechShopz
 
@@ -9,6 +9,7 @@ Current classes are
 * `IntroPython` - Activities for *Python using Jupyter notebooks*.
 * `Algorithms` - Activities for *Fun with Algorithms*.
 * `ArtisticMath` - Activities for *Artistic math*.
+* `Fractals` - Activities for *Beauty of Fractals*.
 * `MachineLearning` - Activities for *Artificial Intelligence: How Computers Learn*.
 * `TextMining` - Activities for *Text Mining*.
 
