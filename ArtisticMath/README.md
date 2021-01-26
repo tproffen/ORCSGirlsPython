@@ -11,11 +11,12 @@ The activities use a modified version of [ColabTurtle](https://github.com/tolgaa
 * **`penup()`** Pen up. No lines will be drawn.
 * **`pendown()`** Pen down. Lines between points will be drawn.
 * **`speed(speed)`** Set drawing speed to `speed` (1:slowest, 13: fastest).
-* **`setx(x)`** Set turtle x position to `x`.
-* **`sety(y)`** Set turtle y position to `y`.
+* **`setx(x)`** Move turtle x position to `x`.
+* **`sety(y)`** Move turtle y position to `y`.
 * **`getx()`** Get the current x position of the turtle.
 * **`gety()`** Get the current y position of the turtle.
-* **`goto(x, y)`** Set turtle position to `x,y`.
+* **`goto(x, y)`** Move turtle position to `x,y`.
+* **`jump(x, y)`** Set turtle position to `x,y` (no line drawn).
 * **`showturtle()`** Show the turtle symbol on drawing.
 * **`hideturtle()`** Hide the turtle symbol on drawing.
 * **`liveon()`** Show drawing step by step.
