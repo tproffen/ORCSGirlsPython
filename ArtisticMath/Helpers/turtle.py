@@ -285,6 +285,13 @@ def goto(x, y):
         raise ValueError('new y position should be nonnegative')
     _moveToNewPosition((x, y))
 
+# jump to position (no line drawn)
+def jump(x, y):
+    old = is_pen_down
+    is_pen_down = False
+    goto(x, y)
+    is_pen_down = old
+ 
 
 # switch turtle visibility to ON
 def showturtle():
