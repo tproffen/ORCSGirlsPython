@@ -1,7 +1,6 @@
 from IPython.display import display, HTML
 import time
 import math
-import random
 
 #-------------------------------------------------------------------------------------------------------
 # Created 23rd October 2018 by Tolga Atam
@@ -334,8 +333,6 @@ def show():
 def bgcolor(color):
     global background_color
 
-    if (color == 'random'): 
-        color = "#%06x" % random.randint(0, 0xFFFFFF)
     background_color = color
     _updateDrawing()
 
@@ -344,8 +341,6 @@ def bgcolor(color):
 def color(color):
     global pen_color
 
-    if (color == 'random'):
-        color = "#%06x" % random.randint(0, 0xFFFFFF)
     pen_color = color
     _updateDrawing()
 
