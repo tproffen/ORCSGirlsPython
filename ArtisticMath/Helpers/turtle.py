@@ -335,7 +335,7 @@ def bgcolor(color):
     global background_color
 
     if (color == 'random'): 
-        color = "%06x" % random.randint(0, 0xFFFFFF)
+        color = "#%06x" % random.randint(0, 0xFFFFFF)
     background_color = color
     _updateDrawing()
 
@@ -345,7 +345,7 @@ def color(color):
     global pen_color
 
     if (color == 'random'):
-        color = "%06x" % random.randint(0, 0xFFFFFF)
+        color = "#%06x" % random.randint(0, 0xFFFFFF)
     pen_color = color
     _updateDrawing()
 
