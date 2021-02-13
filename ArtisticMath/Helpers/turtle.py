@@ -1,6 +1,7 @@
 from IPython.display import display, HTML
 import time
 import math
+import random
 
 #-------------------------------------------------------------------------------------------------------
 # Created 23rd October 2018 by Tolga Atam
@@ -23,7 +24,6 @@ DEFAULT_BACKGROUND_COLOR = 'black'
 DEFAULT_IS_PEN_DOWN = True
 DEFAULT_SVG_LINES_STRING = ""
 DEFAULT_PEN_WIDTH = 4
-VALID_COLORS = ('white', 'yellow', 'orange', 'red', 'green', 'blue', 'purple', 'grey', 'black', 'lightgrey')
 SVG_TEMPLATE = """
       <svg width="{window_width}" height="{window_height}">
         <rect width="100%" height="100%" fill="{background_color}"/>
@@ -329,24 +329,21 @@ def show():
     is_live_drawing = True
     _updateDrawing()
     is_live_drawing = tmp
-
-
-# change the background color of the drawing area; valid colors are defined at VALID_COLORS
+    
+# change the background color of the drawing area;
 def bgcolor(color):
     global background_color
 
-#    if not color in VALID_COLORS:
-#        raise ValueError('color value should be one of the following: ' + str(VALID_COLORS))
+    if (color == 'random') color = "%06x" % random.randint(0, 0xFFFFFF)
     background_color = color
     _updateDrawing()
 
 
-# change the color of the pen; valid colors are defined at VALID_COLORS
+# change the color of the pen;
 def color(color):
     global pen_color
 
-#    if not color in VALID_COLORS:
-#        raise ValueError('color value should be one of the following: ' + str(VALID_COLORS))
+    if (color == 'random') color = "%06x" % random.randint(0, 0xFFFFFF)
     pen_color = color
     _updateDrawing()
 
