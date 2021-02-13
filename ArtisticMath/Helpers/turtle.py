@@ -1,7 +1,23 @@
 from IPython.display import display, HTML
 import time
 import math
+import random
+import colorsys
 
+#------------------------------------------------------------------------
+# Color functions - inputs are from 0.0 to 1.0
+#------------------------------------------------------------------------
+def color_rgb(r, g, b):
+    rgb = list(round(i * 255) for i in [r, g, b])
+    return  '#'+''.join(f'{i:02x}' for i in rgb)
+
+def color_hsv(h, s, v):
+    rgb = list(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
+    return '#'+''.join(f'{i:02x}' for i in rgb)
+
+def color_random():
+  return "#%06x" % random.randint(0, 0xFFFFFF)
+  
 #-------------------------------------------------------------------------------------------------------
 # Created 23rd October 2018 by Tolga Atam
 # https://github.com/tolgaatam/ColabTurtle

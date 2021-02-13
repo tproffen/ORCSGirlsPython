@@ -1,8 +1,6 @@
 from Helpers.turtle import *
 from numpy import arange
 import math
-import random
-import colorsys
 
 #------------------------------------------------------------------------
 # Some useful helper functions
@@ -23,20 +21,6 @@ def grid(delta):
     pendown()
     goto(xmax,y)
     penup()
- 
-#------------------------------------------------------------------------
-# Color functions - inputs are from 0.0 to 1.0
-#------------------------------------------------------------------------
-def color_rgb(r, g, b):
-    rgb = list(round(i * 255) for i in [r, g, b])
-    return  '#'+''.join(f'{i:02x}' for i in rgb)
-
-def color_hsv(h, s, v):
-    rgb = list(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
-    return '#'+''.join(f'{i:02x}' for i in rgb)
-
-def color_random():
-  return "#%06x" % random.randint(0, 0xFFFFFF)
     
 #------------------------------------------------------------------------
 # Different curve functions
