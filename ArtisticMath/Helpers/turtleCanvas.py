@@ -160,10 +160,6 @@ initTurtle(); disableControls(true); c.addEventListener('mousemove',getCoordinat
 # Turtle state and default values
 #-------------------------------------------------------------------------------------------------------
 
-#-------------------------------------------------------------------------------------------------------
-# Turtle state and default values
-#-------------------------------------------------------------------------------------------------------
-
 defaultCanvas={'bgcolor':'white', 'statuscolor': '#ededff', 'turtle':False,
                  'canvascolor': '#fafafa', 'width':1000, 'height':600, 'delay':0}
 defaultTurtle={'pen':False, 'x':0, 'y':0, 'h':0, 'color':'blue', 'width':2, 
