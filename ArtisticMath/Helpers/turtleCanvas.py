@@ -175,7 +175,7 @@ life = False
 #-------------------------------------------------------------------------------------------------------
 # initializeTurtle(width=width, height=height)
 #-------------------------------------------------------------------------------------------------------
-def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultsCanvas['height'])):
+def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultCanvas['height'])):
   global defaultCanvas, defaultTurtle, currentCanvas, currentTurtle, life
   global drawing_window
 
