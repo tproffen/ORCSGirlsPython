@@ -168,8 +168,8 @@ defaultCanvas={'bgcolor':'white', 'statuscolor': '#ededff', 'turtle':False,
                  'canvascolor': '#fafafa', 'width':1000, 'height':600, 'delay':0}
 defaultTurtle={'pen':False, 'x':0, 'y':0, 'h':0, 'color':'blue', 'width':2, 
                  'fill':False, 'fillcolor':'yellow'}
-currentCanvas = defaultCanvas
-currentTurtle = defaultTurtle
+currentCanvas = defaultCanvas.copy()
+currentTurtle = defaultTurtle.copy()
 life = False
 
 #-------------------------------------------------------------------------------------------------------
@@ -180,10 +180,10 @@ def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultCanvas['
   global drawing_window
 
   drawing_window = display(IPython.display.HTML(createCanvas), display_id=True)
-  currentCanvas = defaultCanvas
+  currentCanvas = defaultCanvas.copy()
   (currentCanvas['width'],currentCanvas['height'])=initial_window_size
   currentCanvas['lines']=[]
-  currentTurtle=defaultTurtle
+  currentTurtle=defaultTurtle.copy()
 
   _updateTurtleXY(currentCanvas['width']/2, currentCanvas['height']/2, 0.0)
   _updateDrawing()
