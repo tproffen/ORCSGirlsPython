@@ -181,8 +181,7 @@ def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultCanvas['
 
   drawing_window = display(IPython.display.HTML(createCanvas), display_id=True)
   currentCanvas = defaultCanvas
-  currentCanvas['width']=width
-  currentCanvas['height']=height
+  (currentCanvas['width'],currentCanvas['height'])=initial_window_size
   currentCanvas['lines']=[]
   currentTurtle=defaultTurtle
 
