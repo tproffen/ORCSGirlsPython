@@ -185,7 +185,7 @@ def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultCanvas['
   currentCanvas['lines']=[]
   currentTurtle=defaultTurtle
 
-  _updateTurtleXY(width/2, height/2, 0.0)
+  _updateTurtleXY(currentCanvas['width']/2, currentCanvas['height']/2, 0.0)
   _updateDrawing()
 
 #-------------------------------------------------------------------------------------------------------
