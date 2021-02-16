@@ -130,7 +130,8 @@ function initTurtle() {
 }
 function setTurtle() {
   turtle=document.getElementById("showturtle").checked;
-  play(0);
+  ctx.putImageData(cold, 0, 0);
+  showTurtle(p[p.length-1].x,p[p.length-1].y,p[p.length-1].h);
 }
 //----------- Functions called from Python ------------------------//
 function updateDrawingCanvas(json) { 
@@ -159,20 +160,24 @@ initTurtle(); disableControls(true); c.addEventListener('mousemove',getCoordinat
 # Turtle state and default values
 #-------------------------------------------------------------------------------------------------------
 
-global defaultCanvas, defaultTurtle, currentCanvas, currentTurtle, life
+#-------------------------------------------------------------------------------------------------------
+# Turtle state and default values
+#-------------------------------------------------------------------------------------------------------
+
+defaultCanvas={'bgcolor':'white', 'statuscolor': '#ededff', 'turtle':False,
+                 'canvascolor': '#fafafa', 'width':1000, 'height':600, 'delay':0}
+defaultTurtle={'pen':False, 'x':0, 'y':0, 'h':0, 'color':'blue', 'width':2, 
+                 'fill':False, 'fillcolor':'yellow'}
+currentCanvas = defaultCanvas
+currentTurtle = defaultTurtle
+life = False
 
 #-------------------------------------------------------------------------------------------------------
 # initializeTurtle(width=width, height=height)
 #-------------------------------------------------------------------------------------------------------
-def initializeTurtle(width=defaultCanvas['width'], height=defaultCanvas['height']):
+def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultsCanvas['height'])):
   global defaultCanvas, defaultTurtle, currentCanvas, currentTurtle, life
   global drawing_window
-
-  defaultCanvas={'bgcolor':'white', 'statuscolor': '#ededff', 'turtle':False,
-                 'canvascolor': '#fafafa', 'width':1000, 'height':600, 'delay':0}
-  defaultTurtle={'pen':False, 'x':0, 'y':0, 'h':0, 'color':'blue', 'width':2, 
-                 'fill':False, 'fillcolor':'yellow'}
-  life = False
 
   drawing_window = display(IPython.display.HTML(createCanvas), display_id=True)
   currentCanvas = defaultCanvas
