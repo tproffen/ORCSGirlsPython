@@ -9,7 +9,7 @@
 # Looks of the figures are inspired from Blockly Games / Turtle (blockly-games.appspot.com/turtle)
 #-------------------------------------------------------------------------------------------------------
 
-import IPython
+from IPython.display import display,Javascript,HTML
 import time
 import json
 import math
@@ -33,10 +33,11 @@ white-space: pre; font-family: 'Courier New', monospace;}
 </style>
 <table>
 <tr><td colspan=4 id='art'><canvas id="turtleCanvas"></div></td></tr>
-<tr id="status"><td class="left"><div id="info">-</div></td><td class="left"><div id="coord">
+<tr id="status"><td class="left"><div id="info">
+<div class="numbers"><b>Turtle</b> - Waiting ..                </div>
+</div></td><td class="left"><div id="coord">
 <div class='numbers'><b>Mouse</b> - x:   0 y:   0</div></div></td>
-<td class="right">Show turtle <input type="checkbox" id="showturtle" onChange="setTurtle();">
-<button onClick="replay();" id="replay">Replay</button>
+<td class="right"><button onClick="replay();" id="replay">Replay</button>
 <button onClick="saveImg();" id="save">Save</button></td></tr>
 </table>
 <script>
@@ -45,35 +46,31 @@ function saveImg() {
   a.download = "turtle.png"; a.href = c.toDataURL("image/png"); a.click();
 }
 function replay() {
-  var t=Math.round(3000/p.length);
+  var t=Math.round(2000/p.length);
   disableControls(true);
   setTimeout(function() { play(t); }, 50);
 }
 function disableControls(disable) {
   document.getElementById("replay").disabled = disable;
   document.getElementById("save").disabled = disable;
-  document.getElementById("showturtle").disabled = disable;
 }
-
 function play(delay) {
   clearCanvas(bgcolor);
   cold = ctx.getImageData(0, 0, c.width, c.height);
   if(delay > 0) {
     (function myLoop(i) {
       setTimeout(function() {
-        plot(i);
+        plot(i, delay);
         if (++i < p.length) { myLoop(i); } else { disableControls(false); }
       }, delay)
     })(1);
   } else {
-    for (var ip=1; ip<p.length; ip++) { plot(ip); }
+    for (var ip=1; ip<p.length; ip++) { plot(ip, delay); }
     disableControls(false);
   }
 }
-function plot(ip) {
-  clearCanvas(bgcolor);
-  ctx.putImageData(cold, 0, 0);
-  ctx.fillStyle='red';
+function plot(ip, delay) {
+  if(dirty) { ctx.putImageData(cold, 0, 0); }
   if(p[ip-1].fill!=p[ip].fill   || p[ip-1].width!=p[ip].width || 
      p[ip-1].color!=p[ip].color || p[ip-1].fillcolor!=p[ip].fillcolor ||
      ip==1) {
@@ -89,8 +86,7 @@ function plot(ip) {
   if(p[ip].pen) { ctx.lineTo(p[ip].x, p[ip].y); }
   else          { ctx.moveTo(p[ip].x, p[ip].y); }
   ctx.stroke();
-  cold = ctx.getImageData(0, 0, c.width, c.height);
-  showTurtle(p[ip].x, p[ip].y, p[ip].h);
+  if(turtle && (delay > 0 || ip==p.length-1)) { showTurtle(ip); }
   updateStatus(p[ip].x, p[ip].y, p[ip].h);
 }
 function updateStatus(x,y,h) {
@@ -107,14 +103,14 @@ function getCoordinates(e) {
   document.getElementById("coord").innerHTML=
   "<div class='numbers'><b>Mouse</b> - x:"+mx+" y:"+my+"</div>"; 
 }
-function showTurtle(x,y,h) {
-  if(turtle) {
-    ctx.translate(x, y);
-    ctx.rotate(h*Math.PI/180.);
-    ctx.drawImage(timg, -timg.width/2, -timg.height / 2, timg.width, timg.height);
-    ctx.rotate(-h*Math.PI/180.);
-    ctx.translate(-x, -y);
-  }
+function showTurtle(ip) {
+  cold = ctx.getImageData(0, 0, c.width, c.height);
+  ctx.translate(p[ip].x, p[ip].y);
+  ctx.rotate(p[ip].h*Math.PI/180.);
+  ctx.drawImage(timg, -timg.width/2, -timg.height / 2, timg.width, timg.height);
+  ctx.rotate(-p[ip].h*Math.PI/180.);
+  ctx.translate(-p[ip].x, -p[ip].y);
+  dirty = true;
 }
 function clearCanvas(color){
   bgcolor = color;
@@ -126,23 +122,16 @@ function initTurtle() {
   timg = new Image();
   timg.src = turl; timg.setAttribute('crossorigin', 'anonymous');
 }
-function setTurtle() {
-  turtle=document.getElementById("showturtle").checked;
-  ctx.putImageData(cold, 0, 0);
-  showTurtle(p[p.length-1].x,p[p.length-1].y,p[p.length-1].h);
-}
 //----------- Functions called from Python ------------------------//
 function updateDrawingCanvas(json) { 
   var art = JSON.parse(json);
   bgcolor = art.bgcolor;
   turtle = art.turtle;
   c.width = art.width; c.height = art.height;
-  document.getElementById("showturtle").checked = art.turtle;
   document.getElementById("art").style.backgroundColor  = art.canvascolor;
   document.getElementById("status").style.backgroundColor  = art.statuscolor;
 
   p=art.lines;
-  console.log(p.length);
   disableControls(true);
   setTimeout(function() { play(art.delay); }, 50);
 }
@@ -150,7 +139,7 @@ function updateDrawingCanvas(json) {
 var c = document.getElementById("turtleCanvas");
 var ctx = c.getContext("2d");
 var cold = ctx.getImageData(0, 0, c.width, c.height);
-var p = [], timg, turtle = false; path = false;
+var p = [], timg, turtle = false; path = false; dirty = false;
 
 initTurtle(); disableControls(true); c.addEventListener('mousemove',getCoordinates);
 </script>
@@ -175,14 +164,13 @@ def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultCanvas['
   global defaultCanvas, defaultTurtle, currentCanvas, currentTurtle, life
   global drawing_window
 
-  drawing_window = display(IPython.display.HTML(createCanvas), display_id=True)
+  drawing_window = display(HTML(createCanvas), display_id=True)
   currentCanvas = defaultCanvas.copy()
   (currentCanvas['width'],currentCanvas['height'])=initial_window_size
   currentCanvas['lines']=[]
   currentTurtle=defaultTurtle.copy()
 
   _updateTurtleXY(currentCanvas['width']/2, currentCanvas['height']/2, 0.0)
-  _updateDrawing()
 
 #-------------------------------------------------------------------------------------------------------
 # forward(units)
@@ -312,11 +300,14 @@ def liveoff():
   life=False
 
 #-------------------------------------------------------------------------------------------------------
-# speed(delay)
+# speed(speed)   - How many lines / sec
 #-------------------------------------------------------------------------------------------------------
-def speed(delay):
+def speed(speed):
   global currentCanvas;
-  currentCanvas['delay']=delay     # delay is in ms between points
+  if (speed > 0):
+    currentCanvas['delay']=round(1000./speed)
+  else:
+    currentCanvas['delay']=0
 
 #-------------------------------------------------------------------------------------------------------
 # bgcolor(color)
@@ -404,7 +395,7 @@ def _updateDrawing():
   jsondrawing = json.dumps(currentCanvas)
   #print(jsondrawing)
   cmd='updateDrawingCanvas(\''+jsondrawing+'\')'
-  display(IPython.display.Javascript(cmd))
+  display(Javascript(cmd))
 
 #-------------------------------------------------------------------------------------------------------
 def _updateTurtleXY(nx,ny,nh):
