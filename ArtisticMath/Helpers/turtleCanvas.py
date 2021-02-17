@@ -9,7 +9,7 @@
 # Looks of the figures are inspired from Blockly Games / Turtle (blockly-games.appspot.com/turtle)
 #-------------------------------------------------------------------------------------------------------
 
-from IPython.display import display,Javascript,HTML
+from IPython.display import display,Javascript,HTML,clear_output
 import time
 import json
 import math
@@ -158,12 +158,42 @@ currentTurtle = defaultTurtle.copy()
 life = False
 
 #-------------------------------------------------------------------------------------------------------
+# Internal functions
+#-------------------------------------------------------------------------------------------------------
+def _updateDrawing():
+  global currentCanvas, drawing_window
+  if(drawing_window == None):
+    raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
+
+  jsondrawing = json.dumps(currentCanvas)
+  #print(jsondrawing)
+  cmd='updateDrawingCanvas(\''+jsondrawing+'\')'
+  display(Javascript(cmd))
+
+#-------------------------------------------------------------------------------------------------------
+def _updateTurtleXY(nx,ny,nh):
+  global currentTurtle, currentCanvas, life
+  currentTurtle['x'] = nx
+  currentTurtle['y'] = ny
+  currentTurtle['h'] = nh
+  currentCanvas['lines'].append(currentTurtle.copy())
+  if (life): _updateDrawing()
+#-------------------------------------------------------------------------------------------------------
+def _newHeading(x,y):
+  global currentCanvas
+  cind = len(currentCanvas['lines'])-1
+  h = math.degrees(math.atan2(x-currentCanvas['lines'][cind]['x'],currentCanvas['lines'][cind]['y']-y))
+  h = (h + 360) % 360
+  return h
+ 
+#-------------------------------------------------------------------------------------------------------
 # initializeTurtle(width=width, height=height)
 #-------------------------------------------------------------------------------------------------------
 def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultCanvas['height'])):
   global defaultCanvas, defaultTurtle, currentCanvas, currentTurtle, life
   global drawing_window
 
+  clear_output(wait=True)
   drawing_window = display(HTML(createCanvas), display_id=True)
   currentCanvas = defaultCanvas.copy()
   (currentCanvas['width'],currentCanvas['height'])=initial_window_size
@@ -384,31 +414,4 @@ def color_hsv(h, s, v):
 def color_random():
   return "#%06x" % random.randint(0, 0xFFFFFF)
 
-#-------------------------------------------------------------------------------------------------------
-# Internal functions
-#-------------------------------------------------------------------------------------------------------
-def _updateDrawing():
-  global currentCanvas, drawing_window
-  if(drawing_window == None):
-    raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
 
-  jsondrawing = json.dumps(currentCanvas)
-  #print(jsondrawing)
-  cmd='updateDrawingCanvas(\''+jsondrawing+'\')'
-  display(Javascript(cmd))
-
-#-------------------------------------------------------------------------------------------------------
-def _updateTurtleXY(nx,ny,nh):
-  global currentTurtle, currentCanvas, life
-  currentTurtle['x'] = nx
-  currentTurtle['y'] = ny
-  currentTurtle['h'] = nh
-  currentCanvas['lines'].append(currentTurtle.copy())
-  if (life): _updateDrawing()
-#-------------------------------------------------------------------------------------------------------
-def _newHeading(x,y):
-  global currentCanvas
-  cind = len(currentCanvas['lines'])-1
-  h = math.degrees(math.atan2(x-currentCanvas['lines'][cind]['x'],currentCanvas['lines'][cind]['y']-y))
-  h = (h + 360) % 360
-  return h
