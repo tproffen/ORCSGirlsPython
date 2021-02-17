@@ -305,7 +305,7 @@ def liveoff():
 def speed(speed):
   global currentCanvas;
   if (speed > 0):
-    currentCanvas['delay']=max(round(1000./speed),10)
+    currentCanvas['delay']=max(round(1000./speed),1)
   else:
     currentCanvas['delay']=0
 
