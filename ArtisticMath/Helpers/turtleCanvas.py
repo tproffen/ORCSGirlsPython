@@ -32,7 +32,7 @@ canvas {margin-top: 5px;}
 white-space: pre; font-family: 'Courier New', monospace;}
 </style>
 <table>
-<tr><td colspan=4 id='art'><canvas id="turtleCanvas"></canvas></td></tr>
+<tr><td colspan=4 id='art'><canvas id="turtleCanvas"></div></td></tr>
 <tr id="status"><td class="left"><div id="info">-</div></td><td class="left"><div id="coord">
 <div class='numbers'><b>Mouse</b> - x:   0 y:   0</div></div></td>
 <td class="right">Show turtle <input type="checkbox" id="showturtle" onChange="setTurtle();">
@@ -46,7 +46,8 @@ function saveImg() {
 }
 function replay() {
   var t=Math.round(3000/p.length);
-  play(t); 
+  disableControls(true);
+  setTimeout(function() { play(t); }, 50);
 }
 function disableControls(disable) {
   document.getElementById("replay").disabled = disable;
@@ -55,7 +56,6 @@ function disableControls(disable) {
 }
 
 function play(delay) {
-  disableControls(true);
   clearCanvas(bgcolor);
   cold = ctx.getImageData(0, 0, c.width, c.height);
   if(delay > 0) {
@@ -64,33 +64,31 @@ function play(delay) {
         plot(i);
         if (++i < p.length) { myLoop(i); } else { disableControls(false); }
       }, delay)
-    })(0);
+    })(1);
   } else {
-    for (var ip=0; ip<p.length; ip++) { plot(ip); }
+    for (var ip=1; ip<p.length; ip++) { plot(ip); }
     disableControls(false);
   }
 }
 function plot(ip) {
   clearCanvas(bgcolor);
   ctx.putImageData(cold, 0, 0);
-  if(p.length<2 || ip==0 || !p[ip].pen) {
-    ctx.beginPath();
-    ctx.moveTo(p[ip].x, p[ip].y);
-  } else {
-    if (!p[ip].fill) {
-      ctx.beginPath();
-      ctx.moveTo(p[ip-1].x, p[ip-1].y);
-      ctx.strokeStyle = p[ip].color;
-      ctx.lineWidth = p[ip].width;
-      ctx.lineTo(p[ip].x, p[ip].y);
-      ctx.stroke();
-    } else {
-      ctx.lineTo(p[ip].x, p[ip].y);
-      ctx.fillStyle=p[ip].fillcolor;
-      ctx.fill();
-      ctx.stroke();
+  ctx.fillStyle='red';
+  if(p[ip-1].fill!=p[ip].fill   || p[ip-1].width!=p[ip].width || 
+     p[ip-1].color!=p[ip].color || p[ip-1].fillcolor!=p[ip].fillcolor ||
+     ip==1) {
+    if(p[ip-1].fill) {     
+      ctx.fillStyle = p[ip-1].fillcolor;
+      ctx.fill(); 
     }
+    ctx.beginPath();
+    ctx.moveTo(p[ip-1].x, p[ip-1].y);
+    ctx.strokeStyle = p[ip].color;
+    ctx.lineWidth = p[ip].width;
   }
+  if(p[ip].pen) { ctx.lineTo(p[ip].x, p[ip].y); }
+  else          { ctx.moveTo(p[ip].x, p[ip].y); }
+  ctx.stroke();
   cold = ctx.getImageData(0, 0, c.width, c.height);
   showTurtle(p[ip].x, p[ip].y, p[ip].h);
   updateStatus(p[ip].x, p[ip].y, p[ip].h);
@@ -144,13 +142,15 @@ function updateDrawingCanvas(json) {
   document.getElementById("status").style.backgroundColor  = art.statuscolor;
 
   p=art.lines;
+  console.log(p.length);
+  disableControls(true);
   setTimeout(function() { play(art.delay); }, 50);
 }
 
 var c = document.getElementById("turtleCanvas");
 var ctx = c.getContext("2d");
 var cold = ctx.getImageData(0, 0, c.width, c.height);
-var p = [], timg, turtle = false;
+var p = [], timg, turtle = false; path = false;
 
 initTurtle(); disableControls(true); c.addEventListener('mousemove',getCoordinates);
 </script>
@@ -353,6 +353,7 @@ def begin_fill():
 def end_fill():
   global currentTurtle
   currentTurtle['fill']=False
+  _updateTurtleXY(currentTurtle['x'],currentTurtle['y'],currentTurtle['h'])
 
 #-------------------------------------------------------------------------------------------------------
 # width(width)
