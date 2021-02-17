@@ -46,7 +46,7 @@ function saveImg() {
   a.download = "turtle.png"; a.href = c.toDataURL("image/png"); a.click();
 }
 function replay() {
-  var t=Math.round(2000/p.length);
+  var t=Math.max(Math.round(2000/p.length), 20);
   disableControls(true);
   setTimeout(function() { play(t); }, 50);
 }
