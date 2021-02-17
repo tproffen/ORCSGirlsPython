@@ -305,7 +305,7 @@ def liveoff():
 def speed(speed):
   global currentCanvas;
   if (speed > 0):
-    currentCanvas['delay']=round(1000./speed)
+    currentCanvas['delay']=min(round(1000./speed),10)
   else:
     currentCanvas['delay']=0
 
