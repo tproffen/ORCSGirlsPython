@@ -153,8 +153,6 @@ defaultCanvas={'bgcolor':'white', 'statuscolor': '#ededff', 'turtle':False,
                  'canvascolor': '#fafafa', 'width':1000, 'height':600, 'delay':0}
 defaultTurtle={'pen':False, 'x':0, 'y':0, 'h':0, 'color':'blue', 'width':2, 
                  'fill':False, 'fillcolor':'yellow'}
-currentCanvas = defaultCanvas.copy()
-currentTurtle = defaultTurtle.copy()
 life = False
 
 #-------------------------------------------------------------------------------------------------------
@@ -185,7 +183,11 @@ def _newHeading(x,y):
   h = math.degrees(math.atan2(x-currentCanvas['lines'][cind]['x'],currentCanvas['lines'][cind]['y']-y))
   h = (h + 360) % 360
   return h
- 
+#-------------------------------------------------------------------------------------------------------
+def getTurtleCanvas():
+  global currentCanvas
+  return  currentCanvas
+
 #-------------------------------------------------------------------------------------------------------
 # initializeTurtle(width=width, height=height)
 #-------------------------------------------------------------------------------------------------------
