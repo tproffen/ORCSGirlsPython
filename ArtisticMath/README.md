@@ -2,7 +2,7 @@
 
 These activities use a modified version of [ColabTurtle](https://github.com/tolgaatam/ColabTurtle) developed by [Tolga Atam](https://github.com/tolgaatam). Here is a list of commands you can use to draw.
 
-* **`initializeTurtle(initial_speed=DEFAULT_SPEED, initial_window_size=DEFAULT_WINDOW_SIZE)`** Initializes the drawing display. This command needs to be called *first*. The parameters are options. For example `initializeTurtle()` will create a drawing area with the default size and drawing speed. To create a area of e.g. 1000 x 800 pixles, you would use the command `initializeTurtle(initial_window_size=(1000,800))`
+* **`initializeTurtle(initial_window_size=WINDOW_SIZE, mode=DAWRINGMODE)`** Initializes the drawing display. This command needs to be called *first*. The parameters are options. For example `initializeTurtle()` will create a drawing area with the default size and drawing speed. To create a area of e.g. 1000 x 800 pixles, you would use the command `initializeTurtle(initial_window_size=(1000,800))`. The optional parameter `mode` can take three values: `auto` which will pick between an interactive plot and statig plot depending on the number of points. `svg` will select a static plot and `canvas` will select the interactive (you can replay the plot) version.
 * **`forward(units)`** Moves the turtle (pen) forward by the amount `units`. 
 * **`backward(units)`** Moves the turtle (pen) backward by the amount `units`. 
 * **`right(degrees)`**  Turns the direction of the turtle (pen) to the right by `degrees`.
