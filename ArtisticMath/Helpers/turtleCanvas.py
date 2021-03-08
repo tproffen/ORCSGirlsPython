@@ -32,7 +32,7 @@ canvas {margin-top: 5px;}
 white-space: pre; font-family: 'Courier New', monospace;}
 </style>
 <table>
-<tr><td colspan=4 id='art'><canvas id="turtleCanvas"></div></td></tr>
+<tr><td colspan=4 id='art'><canvas id="turtleCanvas"></td></tr>
 <tr id="status"><td class="left"><div id="info">
 <div class="numbers"><b>Turtle</b> - Waiting ..                </div>
 </div></td><td class="left"><div id="coord">
@@ -87,14 +87,22 @@ function plot(ip, delay) {
   else          { ctx.moveTo(p[ip].x, p[ip].y); }
   ctx.stroke();
   if(turtle && (delay > 0 || ip==p.length-1)) { showTurtle(ip); }
-  updateStatus(p[ip].x, p[ip].y, p[ip].h);
+  updateStatus(p[ip].x, p[ip].y, p[ip].h, ip);
 }
-function updateStatus(x,y,h) {
+function updateStatus(x,y,h,ip) {
   px=String(Math.round(x)).padStart(4,' ');
   py=String(Math.round(y)).padStart(4,' ');
   ph=String(Math.round(h)).padStart(4,' ');
+  pi=String(ip).padStart(6,' ');
   document.getElementById("info").innerHTML=
-  "<div class='numbers'><b>Turtle</b> - x:"+px+" y:"+py+" Heading:"+ph+"</div>";
+  "<div class='numbers'><b>Turtle</b> - x:"+px+" y:"+py+
+  " Heading:"+ph+" - Points:"+pi+"</div>";
+}
+function updateStatusStatic(ip) {
+  pi=String(ip).padStart(6,' ');
+  document.getElementById("info").innerHTML=
+  "<div class='numbers'><b>Turtle</b> - Points:"+pi+
+  " (non interactive)           </div>";
 }
 function getCoordinates(e) {
   var rect = c.getBoundingClientRect();
@@ -122,7 +130,9 @@ function initTurtle() {
   timg = new Image();
   timg.src = turl; timg.setAttribute('crossorigin', 'anonymous');
 }
+//-----------------------------------------------------------------//
 //----------- Functions called from Python ------------------------//
+//-----------------------------------------------------------------//
 function updateDrawingCanvas(json) { 
   var art = JSON.parse(json);
   bgcolor = art.bgcolor;
@@ -135,7 +145,22 @@ function updateDrawingCanvas(json) {
   disableControls(true);
   setTimeout(function() { play(art.delay); }, 50);
 }
-
+//-----------------------------------------------------------------//
+function updateDrawingSVG(svg,np) {
+  
+  blob = new Blob([svg],{type:'image/svg+xml;charset=utf-8'});
+  url = URL.createObjectURL(blob);
+  var img = new Image();
+  img.onload = function(e){
+    c.width=img.width; c.height=img.height;
+    ctx.drawImage( img, 0, 0 ); 
+  };
+  img.src = url;
+  document.getElementById("save").disabled = false;
+  updateStatusStatic(np);
+}
+//-----------------------------------------------------------------//
+//-----------------------------------------------------------------//
 var c = document.getElementById("turtleCanvas");
 var ctx = c.getContext("2d");
 var cold = ctx.getImageData(0, 0, c.width, c.height);
@@ -144,38 +169,85 @@ var p = [], timg, turtle = false; path = false; dirty = false;
 initTurtle(); disableControls(true); c.addEventListener('mousemove',getCoordinates);
 </script>
 '''
-
 #-------------------------------------------------------------------------------------------------------
 # Turtle state and default values
 #-------------------------------------------------------------------------------------------------------
 
 defaultCanvas={'bgcolor':'white', 'statuscolor': '#ededff', 'turtle':False,
-                 'canvascolor': '#fafafa', 'width':1000, 'height':600, 'delay':0}
+               'canvascolor': '#fafafa', 'width':1000, 'height':600, 'delay':0}
 defaultTurtle={'pen':False, 'x':0, 'y':0, 'h':0, 'color':'blue', 'width':2, 
-                 'fill':False, 'fillcolor':'yellow'}
-life = False
+               'fill':False, 'fillcolor':'yellow'}
+defaultDrawMode='auto'
 
 #-------------------------------------------------------------------------------------------------------
 # Internal functions
 #-------------------------------------------------------------------------------------------------------
+
+SVG_TEMPLATE = """
+      <svg xmlns="http://www.w3.org/2000/svg" width="{window_width}" height="{window_height}">
+        <rect width="100%" height="100%" fill="{background_color}"/>
+        {groups}
+      </svg>
+    """
+SVG_GRP = """
+     <g fill="{fillcolor}">
+       <path d="{points}" stroke="{pen_color}" stroke-width="{pen_width}"/>
+     </g>"""
+
+#-------------------------------------------------------------------------------------------------------
+def _generateSVG():
+  global currentCanvas
+
+  curr = currentCanvas['lines'][0]
+  last = len(currentCanvas['lines'])-1
+  points=""
+  groups=""
+  prev=currentCanvas['lines'][0]
+  for k, p in enumerate(currentCanvas['lines']):
+    if(p['color']!=curr['color']         or p['width']!=curr['width'] or 
+       p['fillcolor']!=curr['fillcolor'] or p['fill']!=curr['fill'] or
+       k==last):
+
+      fill=p['fillcolor'] if (curr['fill']) else 'none'
+      groups+=SVG_GRP.format(fillcolor=fill,pen_color=curr['color'],
+                             pen_width=curr['width'],points=points)
+      points="M"+str(prev['x'])+' '+str(prev['y'])+" "
+      curr=p
+
+    cmd = 'L' if (p['pen']) else 'M'
+    points += cmd+str(p['x'])+' '+str(p['y'])+" "
+    prev=p
+
+  svg = SVG_TEMPLATE.format(window_width=currentCanvas['width'], 
+                            window_height=currentCanvas['height'], 
+                            background_color=currentCanvas['bgcolor'], groups=groups)
+  return svg
+
+#-------------------------------------------------------------------------------------------------------
 def _updateDrawing():
-  global currentCanvas, drawing_window
+  global currentCanvas, drawing_window, drawing_mode
   if(drawing_window == None):
     raise AttributeError("Display has not been initialized yet. Call initializeTurtle() before using.")
-
-  jsondrawing = json.dumps(currentCanvas)
-  #print(jsondrawing)
-  cmd='updateDrawingCanvas(\''+jsondrawing+'\')'
+  lsvg = (drawing_mode =='svg' or 
+         (drawing_mode == 'auto' and len(currentCanvas['lines']) > 2000))
+  if (lsvg):
+    svg = _generateSVG()
+    np = len(currentCanvas['lines'])
+    cmd='updateDrawingSVG(`'+svg+'`,'+str(np)+')'
+  else:
+    jsondrawing = json.dumps(currentCanvas)
+    cmd='updateDrawingCanvas(\''+jsondrawing+'\')'
+  drawing_window.update(HTML(createCanvas))
   display(Javascript(cmd))
 
 #-------------------------------------------------------------------------------------------------------
 def _updateTurtleXY(nx,ny,nh):
-  global currentTurtle, currentCanvas, life
+  global currentTurtle, currentCanvas
   currentTurtle['x'] = nx
   currentTurtle['y'] = ny
   currentTurtle['h'] = nh
   currentCanvas['lines'].append(currentTurtle.copy())
-  if (life): _updateDrawing()
+
 #-------------------------------------------------------------------------------------------------------
 def _newHeading(x,y):
   global currentCanvas
@@ -183,6 +255,7 @@ def _newHeading(x,y):
   h = math.degrees(math.atan2(x-currentCanvas['lines'][cind]['x'],currentCanvas['lines'][cind]['y']-y))
   h = (h + 360) % 360
   return h
+
 #-------------------------------------------------------------------------------------------------------
 def getTurtleCanvas():
   global currentCanvas
@@ -191,11 +264,12 @@ def getTurtleCanvas():
 #-------------------------------------------------------------------------------------------------------
 # initializeTurtle(width=width, height=height)
 #-------------------------------------------------------------------------------------------------------
-def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultCanvas['height'])):
-  global defaultCanvas, defaultTurtle, currentCanvas, currentTurtle, life
-  global drawing_window
+def initializeTurtle(initial_window_size=(defaultCanvas['width'],defaultCanvas['height']),mode=defaultDrawMode):
+  global defaultCanvas, defaultTurtle, currentCanvas, currentTurtle
+  global drawing_window, drawing_mode
 
   clear_output(wait=True)
+  drawing_mode=mode
   drawing_window = display(HTML(createCanvas), display_id=True)
   currentCanvas = defaultCanvas.copy()
   (currentCanvas['width'],currentCanvas['height'])=initial_window_size
@@ -321,15 +395,12 @@ def show():
 # liveon
 #-------------------------------------------------------------------------------------------------------
 def liveon():
-  global life
-  life=True
-
+  print('Command depreciated')
 #-------------------------------------------------------------------------------------------------------
 # liveon
 #-------------------------------------------------------------------------------------------------------
 def liveoff():
-  global life
-  life=False
+  print('Command depreciated')
 
 #-------------------------------------------------------------------------------------------------------
 # speed(speed)   - How many lines / sec
@@ -345,9 +416,8 @@ def speed(speed):
 # bgcolor(color)
 #-------------------------------------------------------------------------------------------------------
 def bgcolor(color):
-  global currentCanvas, life;
+  global currentCanvas;
   currentCanvas['bgcolor']=color
-  if (life): _updateDrawing()
 
 #-------------------------------------------------------------------------------------------------------
 # color(color)
@@ -389,17 +459,15 @@ def width(width):
 # showturtle()
 #-------------------------------------------------------------------------------------------------------
 def showturtle():
-  global currentCanvas, life;
+  global currentCanvas;
   currentCanvas['turtle']=True
-  if (life): _updateDrawing()
 
 #-------------------------------------------------------------------------------------------------------
 # hideturtle()
 #-------------------------------------------------------------------------------------------------------
 def hideturtle():
-  global currentCanvas, life;
+  global currentCanvas;
   currentCanvas['turtle']=False
-  if (life): _updateDrawing()
 
 #-------------------------------------------------------------------------------------------------------
 # Color functions - inputs are from 0.0 to 1.0

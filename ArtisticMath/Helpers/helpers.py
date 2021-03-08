@@ -1,4 +1,4 @@
-from Helpers.turtle import *
+from Helpers.turtleCanvas import *
 from numpy import arange
 import math
 
