@@ -1,4 +1,3 @@
-<a href="http://www.techgirlz.org"><img src="Images/PoweredTechGirlz.png" align="right" width="150px"></a><br>
 <a href="http://www.orcsgirls.org"><img src="Images/Logo.png" align="right" width="150px"></a>
 
 # Python Notebooks for TechShopz
