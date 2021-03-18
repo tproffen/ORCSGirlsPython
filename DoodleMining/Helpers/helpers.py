@@ -11,7 +11,7 @@ import math
 # Some plotting helpers
 #------------------------------------------------------------------------
 
-def plot_image(img):
+def plot_image(image):
   plt.figure()
   plt.imshow(image)
   plt.axis("off")
