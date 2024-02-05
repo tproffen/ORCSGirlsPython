@@ -16,12 +16,14 @@ class PlotSlider():
     self.step_value = step_value
 
 class InteractivePlot():
-  def __init__(self, func, sliders=[], xtitle='x',ytitle='y',mode='lines'):
+  def __init__(self, func, sliders=[], xtitle='x',ytitle='y', mode='lines', ymin=None, ymax=None):
     self.func = func
     self.sliders = sliders
     self.xtitle = xtitle
     self.ytitle = ytitle
     self.mode = mode
+    self.ymin = ymin
+    self.ymax = ymax
 
     self.graph = None
     self.widget_sliders = []
@@ -36,7 +38,10 @@ class InteractivePlot():
     (self.xvals, self.yvals) = self.func(*args)
 
   def plot(self):
-    self.layout = go.Layout(yaxis_range=[min(self.yvals),max(self.yvals)],
+    if not self.ymin: self.ymin = min(self.yvals)
+    if not self.ymax: self.ymax = max(self.yvals)
+    
+    self.layout = go.Layout(yaxis_range=[self.ymin, self.ymax],
                             xaxis_title=self.xtitle, yaxis_title=self.ytitle,
                             width=800, height=600)
     self.data = go.Scatter(x=self.xvals, y=self.yvals, mode=self.mode, name='Line')
