@@ -9,10 +9,16 @@ Current classes are
 * `IntroPython` - Activities for *Python using Jupyter Notebooks*.
 * `Algorithms` - Activities for *Fun with Algorithms*.
 * `ArtisticMath` - Activities for *Artistic Math*.
-* `Binary` - Activities for *Magic of Binary*
+* `Binary` - Activities for *Magic of Binary*.
+* `Blockchain` - (Future) Activities for *Blockchain*.
+* `ComputerArt` - Activities for *Computer Art*.
 * `DoodleMining` - Activities for *Doodles Data Mining*.
 * `Fractals` - Activities for *Beauty of Fractals*.
+* `GameTheory` - (Future) Activities for *Game Theory`.
+* `IntroPython` - Activities for *Introduction to Python*.
 * `MachineLearning` - Activities for *Artificial Intelligence: How Computers Learn*.
+* `Numbers` - (Future) Activities for *Chaos*.
+* `Objects` = Activities for *Object Oriented Programming*.
 * `TextMining` - Activities for *Text Mining*.
 
 Contact: [thomas@orcsgirls.org](mailto:thomas@orcsgirls.org)
