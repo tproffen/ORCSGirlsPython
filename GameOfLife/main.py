@@ -6,7 +6,7 @@ pygame.init()
 GREY = (29, 29, 29)
 WINDOW_WIDTH = 750
 WINDOW_HEIGHT = 750
-CELL_SIZE = 10
+CELL_SIZE = 20
 FPS = 12
 
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
