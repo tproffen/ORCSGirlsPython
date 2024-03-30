@@ -1,22 +1,24 @@
 #-----------------------------------------------------------------------------------
-# FINAL: The Game of Life
+# STEP 2: Using the grod class
 #-----------------------------------------------------------------------------------
+
+from grid import Grid
 import pygame, sys
-from simulation import Simulation
 
 pygame.init()
 
-GREY = (29, 29, 29)
 WINDOW_WIDTH = 750
 WINDOW_HEIGHT = 750
 CELL_SIZE = 20
 FPS = 12
+GREY = (29, 29, 29)
+
 
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-pygame.display.set_caption("Game of Life")
+pygame.display.set_caption("Demo")
 
+grid = Grid(WINDOW_WIDTH, WINDOW_HEIGHT, CELL_SIZE)
 clock = pygame.time.Clock()
-simulation = Simulation(WINDOW_WIDTH, WINDOW_HEIGHT, CELL_SIZE)
 
 # Simulation Loop
 while True:
@@ -30,32 +32,23 @@ while True:
             pos = pygame.mouse.get_pos()
             row = pos[1] // CELL_SIZE
             column = pos[0] // CELL_SIZE
-            simulation.toggle_cell(row, column)
+            grid.toggle_cell(row, column)
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                simulation.start()
-                pygame.display.set_caption("Game of Life is running")
-            elif event.key == pygame.K_SPACE:
-                simulation.stop()
-                pygame.display.set_caption("Game of Life has stopped")
-            elif event.key == pygame.K_f:
+            if event.key == pygame.K_f:
                 FPS += 2
             elif event.key == pygame.K_s:
                 if FPS > 5:
                     FPS -= 2
             elif event.key == pygame.K_r:
-                simulation.create_random_state()
+                grid.fill_random()
             elif event.key == pygame.K_c:
-                simulation.clear()
+                grid.clear()
             elif event.key == pygame.K_i:
-                simulation.create_from_image('image.png')
+                grid.fill_image('image.png')
 
-    # 2. Updating State
-    simulation.update()
-
-    # 3. Drawing
+    # 2. Draw 10 random rectangles
     window.fill(GREY)
-    simulation.draw(window)
-
+    grid.draw(window)    
+ 
     pygame.display.update()
     clock.tick(FPS)
