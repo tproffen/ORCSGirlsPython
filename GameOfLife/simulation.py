@@ -33,13 +33,17 @@ class Simulation:
                     if cell_value == 1:
                         if live_neighbors > 3 or live_neighbors < 2:
                             self.temp_grid.cells[row][column] = 0
+                            self.grid.gen_alive[row][column] = 0
                         else:
                             self.temp_grid.cells[row][column] = 1
+                            self.grid.gen_alive[row][column] += 1
                     else:
                         if live_neighbors == 3:
                             self.temp_grid.cells[row][column] = 1
+                            self.grid.gen_alive[row][column] = 0
                         else:
                             self.temp_grid.cells[row][column] = 0
+                            self.grid.gen_alive[row][column] = 0
 
             for row in range(self.rows):
                 for column in range(self.columns):
