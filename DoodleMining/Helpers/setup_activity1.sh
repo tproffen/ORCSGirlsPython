@@ -5,9 +5,9 @@ echo "Fetching needed files .."
 mkdir -p Helpers
 curl -s -o Helpers/helpers.py https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/DoodleMining/Helpers/helpers.py
 
-# Getting Turtle extension from Artistic Math!
-curl -s -o Helpers/turtle.py https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/ArtisticMath/Helpers/turtle.py
-curl -s -o Helpers/turtleCanvas.py https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/ArtisticMath/Helpers/turtleCanvas.py
+# Getting Turtle extension 
+curl -s -o Helpers/turtle.py https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/Turtle/turtle.py
+curl -s -o Helpers/turtleCanvas.py https://raw.githubusercontent.com/tproffen/ORCSGirlsPython/master/Turtle/turtleCanvas.py
 
 # Getting updated QuickDraw Python API (for now)
 mkdir -p Helpers/quickdraw

@@ -24,7 +24,7 @@ createCanvas = '''
 table {border-collapse: collapse;}
 button {width: 80px; margin: 5px 5px 5px 0px; text-align: center; font-size: 1em;}
 canvas {margin-top: 5px;}
-#status {background-color: #cdcdff; color:#000000; font-size: 1em;}
+#status {background-color: #cdcdff; color: #000000; font-size: 1em;}
 #art {text-align: center; background-color: #efefff; padding: 0px 5px 0px 5px;}
 .right {text-align: right;}
 .left {text-align: left;}
@@ -260,6 +260,12 @@ def _newHeading(x,y):
 def getTurtleCanvas():
   global currentCanvas
   return  currentCanvas
+
+#-------------------------------------------------------------------------------------------------------
+def saveSVG(file):
+  f = open(file, "a")
+  f.write(_generateSVG())
+  f.close()
 
 #-------------------------------------------------------------------------------------------------------
 # initializeTurtle(width=width, height=height)
